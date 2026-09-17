@@ -1,0 +1,27 @@
+{
+  "name": "smoke-demo",
+  "prompt_file": "../examples/demo_prompt.txt",
+  "model": { "temperature": 0.0, "max_tokens": 64 },
+  "runs": 1,
+  "cases": [
+    {
+      "id": "c001",
+      "input": "I was charged twice for invoice 7",
+      "assert": [
+        { "type": "json_valid" },
+        { "type": "json_field_equals", "field": "category", "value": "billing" },
+        { "type": "not_contains", "value": "Sure" },
+        { "type": "max_tokens", "value": 40 },
+        { "type": "finish_is", "value": "stop" }
+      ]
+    },
+    {
+      "id": "c002",
+      "input": "My package never arrived",
+      "assert": [
+        { "type": "json_valid" },
+        { "type": "json_field_equals", "field": "category", "value": "shipping" }
+      ]
+    }
+  ]
+}
